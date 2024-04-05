@@ -1,0 +1,24 @@
+name: Query APIs and Save Outputs with Node.js
+on:
+  schedule:
+    # Runs every hour. Adjust the cron schedule according to your needs.
+    - cron: '0 * * * *'
+jobs:
+  query_and_save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # Specify the Node.js version you prefer
+      - name: Query APIs and save output
+        run: |
+          node query_api.js
+      - name: Upload outputs as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: api-outputs
+          path: |
+            station_information*.json
+            station_status*.json
